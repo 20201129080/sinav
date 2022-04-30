@@ -1,0 +1,387 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Db1Model1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="GirilenSinav">
+          <Key>
+            <PropertyRef Name="GirilenSinavId" />
+          </Key>
+          <Property Name="GirilenSinavId" Type="int" Nullable="false" />
+          <Property Name="GOgrId" Type="int" Nullable="false" />
+          <Property Name="GSinavId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VerilenCevaplar" Type="nchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ogrenci">
+          <Key>
+            <PropertyRef Name="ogrId" />
+          </Key>
+          <Property Name="ogrId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ogrAdSoyad" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ogrTel" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Secenekler">
+          <Key>
+            <PropertyRef Name="SecenekId" />
+          </Key>
+          <Property Name="SecenekId" Type="int" Nullable="false" />
+          <Property Name="SecenekSoruId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SecenekMetni" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Sinavlar">
+          <Key>
+            <PropertyRef Name="sinavId" />
+          </Key>
+          <Property Name="sinavId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sinavAd" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="sinavtarihi" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Sonuc">
+          <Key>
+            <PropertyRef Name="SonucSinavId" />
+          </Key>
+          <Property Name="SonucSinavId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SonucOgrId" Type="int" Nullable="false" />
+          <Property Name="SinavPuani" Type="int" Nullable="false" />
+          <Property Name="BasariDurumu" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Sorular">
+          <Key>
+            <PropertyRef Name="SoruId" />
+          </Key>
+          <Property Name="SoruId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SinavSoruId" Type="int" Nullable="false" />
+          <Property Name="SoruMetni" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="DogruSecenek" Type="nchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_GirilenSinav_Ogrenci">
+          <End Role="Ogrenci" Type="Self.Ogrenci" Multiplicity="1" />
+          <End Role="GirilenSinav" Type="Self.GirilenSinav" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ogrenci">
+              <PropertyRef Name="ogrId" />
+            </Principal>
+            <Dependent Role="GirilenSinav">
+              <PropertyRef Name="GOgrId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GirilenSinav_Sinavlar">
+          <End Role="Sinavlar" Type="Self.Sinavlar" Multiplicity="1" />
+          <End Role="GirilenSinav" Type="Self.GirilenSinav" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sinavlar">
+              <PropertyRef Name="sinavId" />
+            </Principal>
+            <Dependent Role="GirilenSinav">
+              <PropertyRef Name="GSinavId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Secenekler_Sorular">
+          <End Role="Sorular" Type="Self.Sorular" Multiplicity="1" />
+          <End Role="Secenekler" Type="Self.Secenekler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sorular">
+              <PropertyRef Name="SoruId" />
+            </Principal>
+            <Dependent Role="Secenekler">
+              <PropertyRef Name="SecenekSoruId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sonuc_Ogrenci">
+          <End Role="Ogrenci" Type="Self.Ogrenci" Multiplicity="1" />
+          <End Role="Sonuc" Type="Self.Sonuc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ogrenci">
+              <PropertyRef Name="ogrId" />
+            </Principal>
+            <Dependent Role="Sonuc">
+              <PropertyRef Name="SonucOgrId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sorular_Sinavlar">
+          <End Role="Sinavlar" Type="Self.Sinavlar" Multiplicity="1" />
+          <End Role="Sorular" Type="Self.Sorular" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sinavlar">
+              <PropertyRef Name="sinavId" />
+            </Principal>
+            <Dependent Role="Sorular">
+              <PropertyRef Name="SinavSoruId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Db1Model1StoreContainer">
+          <EntitySet Name="GirilenSinav" EntityType="Self.GirilenSinav" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ogrenci" EntityType="Self.Ogrenci" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Secenekler" EntityType="Self.Secenekler" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sinavlar" EntityType="Self.Sinavlar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sonuc" EntityType="Self.Sonuc" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sorular" EntityType="Self.Sorular" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_GirilenSinav_Ogrenci" Association="Self.FK_GirilenSinav_Ogrenci">
+            <End Role="Ogrenci" EntitySet="Ogrenci" />
+            <End Role="GirilenSinav" EntitySet="GirilenSinav" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GirilenSinav_Sinavlar" Association="Self.FK_GirilenSinav_Sinavlar">
+            <End Role="Sinavlar" EntitySet="Sinavlar" />
+            <End Role="GirilenSinav" EntitySet="GirilenSinav" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Secenekler_Sorular" Association="Self.FK_Secenekler_Sorular">
+            <End Role="Sorular" EntitySet="Sorular" />
+            <End Role="Secenekler" EntitySet="Secenekler" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sonuc_Ogrenci" Association="Self.FK_Sonuc_Ogrenci">
+            <End Role="Ogrenci" EntitySet="Ogrenci" />
+            <End Role="Sonuc" EntitySet="Sonuc" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sorular_Sinavlar" Association="Self.FK_Sorular_Sinavlar">
+            <End Role="Sinavlar" EntitySet="Sinavlar" />
+            <End Role="Sorular" EntitySet="Sorular" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Db1Model1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="GirilenSinav">
+          <Key>
+            <PropertyRef Name="GirilenSinavId" />
+          </Key>
+          <Property Name="GirilenSinavId" Type="Int32" Nullable="false" />
+          <Property Name="GOgrId" Type="Int32" Nullable="false" />
+          <Property Name="GSinavId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VerilenCevaplar" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Ogrenci" Relationship="Self.FK_GirilenSinav_Ogrenci" FromRole="GirilenSinav" ToRole="Ogrenci" />
+          <NavigationProperty Name="Sinavlar" Relationship="Self.FK_GirilenSinav_Sinavlar" FromRole="GirilenSinav" ToRole="Sinavlar" />
+        </EntityType>
+        <EntityType Name="Ogrenci">
+          <Key>
+            <PropertyRef Name="ogrId" />
+          </Key>
+          <Property Name="ogrId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ogrAdSoyad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ogrTel" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="GirilenSinav" Relationship="Self.FK_GirilenSinav_Ogrenci" FromRole="Ogrenci" ToRole="GirilenSinav" />
+          <NavigationProperty Name="Sonuc" Relationship="Self.FK_Sonuc_Ogrenci" FromRole="Ogrenci" ToRole="Sonuc" />
+        </EntityType>
+        <EntityType Name="Secenekler">
+          <Key>
+            <PropertyRef Name="SecenekId" />
+          </Key>
+          <Property Name="SecenekId" Type="Int32" Nullable="false" />
+          <Property Name="SecenekSoruId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SecenekMetni" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Sorular" Relationship="Self.FK_Secenekler_Sorular" FromRole="Secenekler" ToRole="Sorular" />
+        </EntityType>
+        <EntityType Name="Sinavlar">
+          <Key>
+            <PropertyRef Name="sinavId" />
+          </Key>
+          <Property Name="sinavId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sinavAd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="sinavtarihi" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="GirilenSinav" Relationship="Self.FK_GirilenSinav_Sinavlar" FromRole="Sinavlar" ToRole="GirilenSinav" />
+          <NavigationProperty Name="Sorular" Relationship="Self.FK_Sorular_Sinavlar" FromRole="Sinavlar" ToRole="Sorular" />
+        </EntityType>
+        <EntityType Name="Sonuc">
+          <Key>
+            <PropertyRef Name="SonucSinavId" />
+          </Key>
+          <Property Name="SonucSinavId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SonucOgrId" Type="Int32" Nullable="false" />
+          <Property Name="SinavPuani" Type="Int32" Nullable="false" />
+          <Property Name="BasariDurumu" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Ogrenci" Relationship="Self.FK_Sonuc_Ogrenci" FromRole="Sonuc" ToRole="Ogrenci" />
+        </EntityType>
+        <EntityType Name="Sorular">
+          <Key>
+            <PropertyRef Name="SoruId" />
+          </Key>
+          <Property Name="SoruId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SinavSoruId" Type="Int32" Nullable="false" />
+          <Property Name="SoruMetni" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DogruSecenek" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Secenekler" Relationship="Self.FK_Secenekler_Sorular" FromRole="Sorular" ToRole="Secenekler" />
+          <NavigationProperty Name="Sinavlar" Relationship="Self.FK_Sorular_Sinavlar" FromRole="Sorular" ToRole="Sinavlar" />
+        </EntityType>
+        <Association Name="FK_GirilenSinav_Ogrenci">
+          <End Role="Ogrenci" Type="Self.Ogrenci" Multiplicity="1" />
+          <End Role="GirilenSinav" Type="Self.GirilenSinav" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ogrenci">
+              <PropertyRef Name="ogrId" />
+            </Principal>
+            <Dependent Role="GirilenSinav">
+              <PropertyRef Name="GOgrId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GirilenSinav_Sinavlar">
+          <End Role="Sinavlar" Type="Self.Sinavlar" Multiplicity="1" />
+          <End Role="GirilenSinav" Type="Self.GirilenSinav" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sinavlar">
+              <PropertyRef Name="sinavId" />
+            </Principal>
+            <Dependent Role="GirilenSinav">
+              <PropertyRef Name="GSinavId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sonuc_Ogrenci">
+          <End Role="Ogrenci" Type="Self.Ogrenci" Multiplicity="1" />
+          <End Role="Sonuc" Type="Self.Sonuc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ogrenci">
+              <PropertyRef Name="ogrId" />
+            </Principal>
+            <Dependent Role="Sonuc">
+              <PropertyRef Name="SonucOgrId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Secenekler_Sorular">
+          <End Role="Sorular" Type="Self.Sorular" Multiplicity="1" />
+          <End Role="Secenekler" Type="Self.Secenekler" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sorular">
+              <PropertyRef Name="SoruId" />
+            </Principal>
+            <Dependent Role="Secenekler">
+              <PropertyRef Name="SecenekSoruId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sorular_Sinavlar">
+          <End Role="Sinavlar" Type="Self.Sinavlar" Multiplicity="1" />
+          <End Role="Sorular" Type="Self.Sorular" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sinavlar">
+              <PropertyRef Name="sinavId" />
+            </Principal>
+            <Dependent Role="Sorular">
+              <PropertyRef Name="SinavSoruId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Db1Entities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="GirilenSinav" EntityType="Self.GirilenSinav" />
+          <EntitySet Name="Ogrenci" EntityType="Self.Ogrenci" />
+          <EntitySet Name="Secenekler" EntityType="Self.Secenekler" />
+          <EntitySet Name="Sinavlar" EntityType="Self.Sinavlar" />
+          <EntitySet Name="Sonuc" EntityType="Self.Sonuc" />
+          <EntitySet Name="Sorular" EntityType="Self.Sorular" />
+          <AssociationSet Name="FK_GirilenSinav_Ogrenci" Association="Self.FK_GirilenSinav_Ogrenci">
+            <End Role="Ogrenci" EntitySet="Ogrenci" />
+            <End Role="GirilenSinav" EntitySet="GirilenSinav" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GirilenSinav_Sinavlar" Association="Self.FK_GirilenSinav_Sinavlar">
+            <End Role="Sinavlar" EntitySet="Sinavlar" />
+            <End Role="GirilenSinav" EntitySet="GirilenSinav" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sonuc_Ogrenci" Association="Self.FK_Sonuc_Ogrenci">
+            <End Role="Ogrenci" EntitySet="Ogrenci" />
+            <End Role="Sonuc" EntitySet="Sonuc" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Secenekler_Sorular" Association="Self.FK_Secenekler_Sorular">
+            <End Role="Sorular" EntitySet="Sorular" />
+            <End Role="Secenekler" EntitySet="Secenekler" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sorular_Sinavlar" Association="Self.FK_Sorular_Sinavlar">
+            <End Role="Sinavlar" EntitySet="Sinavlar" />
+            <End Role="Sorular" EntitySet="Sorular" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Db1Model1StoreContainer" CdmEntityContainer="Db1Entities1">
+          <EntitySetMapping Name="GirilenSinav">
+            <EntityTypeMapping TypeName="Db1Model1.GirilenSinav">
+              <MappingFragment StoreEntitySet="GirilenSinav">
+                <ScalarProperty Name="GirilenSinavId" ColumnName="GirilenSinavId" />
+                <ScalarProperty Name="GOgrId" ColumnName="GOgrId" />
+                <ScalarProperty Name="GSinavId" ColumnName="GSinavId" />
+                <ScalarProperty Name="VerilenCevaplar" ColumnName="VerilenCevaplar" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ogrenci">
+            <EntityTypeMapping TypeName="Db1Model1.Ogrenci">
+              <MappingFragment StoreEntitySet="Ogrenci">
+                <ScalarProperty Name="ogrId" ColumnName="ogrId" />
+                <ScalarProperty Name="ogrAdSoyad" ColumnName="ogrAdSoyad" />
+                <ScalarProperty Name="ogrTel" ColumnName="ogrTel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Secenekler">
+            <EntityTypeMapping TypeName="Db1Model1.Secenekler">
+              <MappingFragment StoreEntitySet="Secenekler">
+                <ScalarProperty Name="SecenekId" ColumnName="SecenekId" />
+                <ScalarProperty Name="SecenekSoruId" ColumnName="SecenekSoruId" />
+                <ScalarProperty Name="SecenekMetni" ColumnName="SecenekMetni" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sinavlar">
+            <EntityTypeMapping TypeName="Db1Model1.Sinavlar">
+              <MappingFragment StoreEntitySet="Sinavlar">
+                <ScalarProperty Name="sinavId" ColumnName="sinavId" />
+                <ScalarProperty Name="sinavAd" ColumnName="sinavAd" />
+                <ScalarProperty Name="sinavtarihi" ColumnName="sinavtarihi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sonuc">
+            <EntityTypeMapping TypeName="Db1Model1.Sonuc">
+              <MappingFragment StoreEntitySet="Sonuc">
+                <ScalarProperty Name="SonucSinavId" ColumnName="SonucSinavId" />
+                <ScalarProperty Name="SonucOgrId" ColumnName="SonucOgrId" />
+                <ScalarProperty Name="SinavPuani" ColumnName="SinavPuani" />
+                <ScalarProperty Name="BasariDurumu" ColumnName="BasariDurumu" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sorular">
+            <EntityTypeMapping TypeName="Db1Model1.Sorular">
+              <MappingFragment StoreEntitySet="Sorular">
+                <ScalarProperty Name="SoruId" ColumnName="SoruId" />
+                <ScalarProperty Name="SinavSoruId" ColumnName="SinavSoruId" />
+                <ScalarProperty Name="SoruMetni" ColumnName="SoruMetni" />
+                <ScalarProperty Name="DogruSecenek" ColumnName="DogruSecenek" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

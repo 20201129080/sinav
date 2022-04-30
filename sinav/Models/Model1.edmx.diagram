@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="79fff81f47ac4688a28d10c1d38bd012" Name="Diagram1" ZoomLevel="100">
+        <EntityTypeShape EntityType="Db1Model1.GirilenSinav" Width="1.5" PointX="1.375" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Db1Model1.Ogrenci" Width="1.5" PointX="4" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Db1Model1.Secenekler" Width="1.5" PointX="6.625" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Db1Model1.Sinavlar" Width="1.5" PointX="1.375" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Db1Model1.Sonuc" Width="1.5" PointX="6.625" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Db1Model1.Sorular" Width="1.5" PointX="4.125" PointY="3.75" IsExpanded="true" />
+        <AssociationConnector Association="Db1Model1.FK_GirilenSinav_Ogrenci" ManuallyRouted="false" />
+        <AssociationConnector Association="Db1Model1.FK_GirilenSinav_Sinavlar" ManuallyRouted="false" />
+        <AssociationConnector Association="Db1Model1.FK_Sonuc_Ogrenci" ManuallyRouted="false" />
+        <AssociationConnector Association="Db1Model1.FK_Secenekler_Sorular" ManuallyRouted="false" />
+        <AssociationConnector Association="Db1Model1.FK_Sorular_Sinavlar" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
